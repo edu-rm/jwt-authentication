@@ -1,9 +1,20 @@
 const bcrypt = require('bcryptjs');
 
 const UserModel = require('../models/UserModel.js');
+const Yup = require('yup');
 
 class UserController{
   async store(req,res){
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string().email().required(),
+      password: Yup.string().required()
+    });
+
+    if(!(await schema.isValid(req.body))){
+      return res.status(400).json({ error: "Validation Fails" });
+    }
+
     const { name, email, password } = req.body;
 
     const password_hash = await bcrypt.hash(password, 8);
