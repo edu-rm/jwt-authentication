@@ -2,9 +2,11 @@ const { Router } = require('express');
 
 const routes = new Router();
 
-routes.get('/', (req,res) =>{
-  return res.json('JWT');
-});
+const UserController = require('./app/controllers/UserController');
+
+//routes.get('/users', UserController.show);
+routes.post('/users', UserController.store);
+
 
 
 module.exports = routes;
