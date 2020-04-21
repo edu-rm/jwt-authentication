@@ -1,13 +1,18 @@
 const db = require('../../config/database');
+const bcrypt = require('bcryptjs');
 
 class UserController{
-  store(req,res){
-    const { nome, email, senha } = req.body;
+  async store(req,res){
+    const { nome, email, password } = req.body;
+
+    const password_hash = await bcrypt.hash(password, 8);
+    console.log(password_hash);
 
     return res.json({
       nome,
       email,
-      senha
+      password_hash,
+      password,
     });
 
   }
