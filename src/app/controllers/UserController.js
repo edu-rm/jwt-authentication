@@ -22,6 +22,12 @@ class UserController{
     });
 
   }
+  update(req,res){
+    const {user_id} = req.body;
+    return res.json({
+      user_id,
+    });
+  }
 }
 
 module.exports = new UserController();
