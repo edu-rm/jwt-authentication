@@ -14,11 +14,11 @@ class UserController{
       password_hash,
     };
 
-    const id = UserModel.create(data);
-
+    let results = await UserModel.create(data);
+    const { id } = results.rows[0];
 
     return res.json({
-      id
+      id,
     });
 
   }

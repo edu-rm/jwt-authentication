@@ -19,12 +19,20 @@ module.exports = {
       password_hash
     ];
 
-    let user = 0;
 
-    db.query(query, values, function(err, results){
-      if(err) throw err;
-      user = results.rows[0].id;
-    });
-    return user;
+    return db.query(query, values);
+
+  },
+  findByEmail(email, callback){
+    const query = `
+      SELECT * FROM
+        users
+      WHERE
+        email = $1
+    `;
+
+    const values = [email];
+    return db.query(query, values);
   }
+
 };
