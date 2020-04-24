@@ -17,6 +17,16 @@ class UserController{
 
     const { name, email, password } = req.body;
 
+    /**
+     * Veryfing if the email is already registered
+     */
+
+    const exists = UserModel.findByEmail(email);
+
+    if(exists) {
+      return res.status(400).json({ error: "Email already registered"});
+    }
+
     const password_hash = await bcrypt.hash(password, 8);
 
     const data = {

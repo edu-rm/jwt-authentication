@@ -23,7 +23,7 @@ module.exports = {
     return db.query(query, values);
 
   },
-  findByEmail(email, callback){
+  findByEmail(email){
     const query = `
       SELECT * FROM
         users
