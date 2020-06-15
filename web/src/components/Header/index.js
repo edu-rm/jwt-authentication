@@ -6,11 +6,11 @@ function Header() {
     <nav>
       <ul>
         <li>
-          <h1>HOOKS</h1>
+          <h1>hook<strong>S</strong></h1>
           <p>By: Eduardo Rampon Meireles</p>
         </li>
         <li>
-          <p>Login/Sair</p>
+          Login/Sair
         </li>
       </ul>
     </nav>
