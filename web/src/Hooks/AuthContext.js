@@ -1,19 +1,32 @@
 import React, { createContext, useReducer } from 'react';
 
 const initial_state = {
-  isAuthenticated: false,
-  user: 'eduardo',
-  token: 'nulsdfsd',
+  isAuthenticated: true,
+  user: null,
+  token: null,
 };
 
 const reducer = (state, action) => {
   switch(action.type) {
-    case "LOGIN":
-      console.log("login") ;
-      return state;
-    case "SAIR":
-      console.log("sair");
-      return state;
+    case "@LOGIN":
+      localStorage.setItem('MyApp/@user', JSON.stringify(action.payload.user));
+      localStorage.setItem('MyApp/@token', JSON.stringify(action.payload.token));
+
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload.user,
+        token: action.payload.payload,
+      };
+    case "@SAIR":
+      localStorage.removeItem('MyApp/@user');
+      localStorage.removeItem('MyApp/@token');
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+        token: null,
+      };
     default:
       return state;
   }

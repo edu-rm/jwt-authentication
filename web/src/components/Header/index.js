@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import './styles.css';
 
+import { AuthContext } from '../../Hooks/AuthContext';
+
 function Header() {
+  const { state } = useContext(AuthContext);
   return (
     <nav>
       <ul>
@@ -10,7 +14,13 @@ function Header() {
           <p>By: Eduardo Rampon Meireles</p>
         </li>
         <li>
-          Login/Sair
+          {
+            state.isAuthenticated
+            ?
+            <button >Sair</button>
+            :
+            <p>Faça login</p>
+          }
         </li>
       </ul>
     </nav>

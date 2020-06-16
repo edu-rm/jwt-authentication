@@ -1,10 +1,7 @@
 import React, { useContext } from 'react';
 import './styles.css';
 
-import { AuthContext } from '../../Hooks/AuthContext';
-
 function Login() {
-  const { state } = useContext(AuthContext);
 
   return (
     <div className="container-login">
