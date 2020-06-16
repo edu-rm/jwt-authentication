@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './styles.css';
 
+import { AuthContext } from '../../Hooks/AuthContext';
+
 function Login() {
+  const { state } = useContext(AuthContext);
+
   return (
     <div className="container">
       <h2>Faça login</h2>
