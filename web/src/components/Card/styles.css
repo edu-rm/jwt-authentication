@@ -1,0 +1,33 @@
+.cards {
+  /* display: grid; */
+  /* grid-template-columns: repeat(3, 1fr); */
+  /* justify-items: center; */
+
+}
+
+.card {
+  min-width: 200px;
+  min-height: 250px ;
+  box-shadow: 9px 9px 15px 0px rgba(0,0,0,0.7);
+  margin: 50px 40px;
+  text-align: center;
+  align-self: center;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  width: 100%;
+}
+
+.text {
+  background-color: blueviolet;
+  /* opacity: 0.7; */
+  padding: 12px 12px;
+  color: black;
+  font-weight: bold;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+
+}

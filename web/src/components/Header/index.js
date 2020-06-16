@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import './styles.css';
 
 import { AuthContext } from '../../Hooks/AuthContext';
@@ -24,7 +23,7 @@ function Header() {
           {
             state.isAuthenticated
             ?
-            <button onClick={handleLogout}>Sair</button>
+            <button type="button" onClick={handleLogout}>Sair</button>
             :
             <p>Faça login</p>
           }
