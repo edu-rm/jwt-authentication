@@ -7,7 +7,7 @@ function Login() {
   const { state } = useContext(AuthContext);
 
   return (
-    <div className="container">
+    <div className="container-login">
       <h2>Faça login</h2>
       <form>
         <input type="text" placeholder="Email"/>

@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 
 const initial_state = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   user: 'eduardo',
   token: 'nulsdfsd',
 };
