@@ -5,7 +5,14 @@ import './styles.css';
 import { AuthContext } from '../../Hooks/AuthContext';
 
 function Header() {
-  const { state } = useContext(AuthContext);
+  const { state, dispatch } = useContext(AuthContext);
+
+  function handleLogout(){
+    dispatch({
+      type : '@SAIR',
+    });
+  }
+
   return (
     <nav>
       <ul>
@@ -17,7 +24,7 @@ function Header() {
           {
             state.isAuthenticated
             ?
-            <button >Sair</button>
+            <button onClick={handleLogout}>Sair</button>
             :
             <p>Faça login</p>
           }

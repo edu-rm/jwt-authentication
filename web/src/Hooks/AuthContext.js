@@ -9,8 +9,8 @@ const initial_state = {
 const reducer = (state, action) => {
   switch(action.type) {
     case "@LOGIN":
-      localStorage.setItem('MyApp/@user', JSON.stringify(action.payload.user));
-      localStorage.setItem('MyApp/@token', JSON.stringify(action.payload.token));
+      // localStorage.setItem('MyApp/@user', JSON.stringify(action.payload.user));
+      // localStorage.setItem('MyApp/@token', JSON.stringify(action.payload.token));
 
       return {
         ...state,
@@ -19,8 +19,8 @@ const reducer = (state, action) => {
         token: action.payload.payload,
       };
     case "@SAIR":
-      localStorage.removeItem('MyApp/@user');
-      localStorage.removeItem('MyApp/@token');
+      // localStorage.removeItem('MyApp/@user');
+      // localStorage.removeItem('MyApp/@token');
       return {
         ...state,
         isAuthenticated: false,
