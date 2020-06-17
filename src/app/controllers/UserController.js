@@ -6,7 +6,6 @@ const Yup = require('yup');
 class UserController{
   async store(req,res){
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
       email: Yup.string().email().required(),
       password: Yup.string().required()
     });
@@ -21,26 +20,19 @@ class UserController{
      * Veryfing if the email is already registered
      */
 
-    const exists = UserModel.findByEmail(email);
+    const exists = await UserModel.findOne({
+      where: {
+        email,
+      }
+    }) ;
 
     if(exists) {
       return res.status(400).json({ error: "Email already registered"});
     }
 
-    const password_hash = await bcrypt.hash(password, 8);
+    const newUser = await UserModel.create(req.body);
 
-    const data = {
-      name,
-      email,
-      password_hash,
-    };
-
-    let results = await UserModel.create(data);
-    const { id } = results.rows[0];
-
-    return res.json({
-      id,
-    });
+    return res.json(newUser);
 
   }
   update(req,res){
