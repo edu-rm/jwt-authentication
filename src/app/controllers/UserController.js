@@ -35,12 +35,6 @@ class UserController{
     return res.json(newUser);
 
   }
-  update(req,res){
-    const {user_id} = req.body;
-    return res.json({
-      user_id,
-    });
-  }
 }
 
 module.exports = new UserController();
