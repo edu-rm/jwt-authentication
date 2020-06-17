@@ -1,14 +1,14 @@
-const { Pool } = require('pg');
 require("dotenv").config();
 
-
-module.exports = new Pool({
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
+module.exports = {
+  dialect: 'mysql',
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT ,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-});
-
-
-
+  define : {
+    timestamps: true, // updated at and created at
+    underscored: true, // utilizando o padrao underscored zzzzzz_zzzz
+    underscoredAll: true,
+  },
+};

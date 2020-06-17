@@ -1,38 +1,21 @@
-const db = require('../../config/database.js');
+const Sequelize = require('sequelize');
+const {Model} = require('sequelize');
 
 
-module.exports = {
-  create(data){
-    const query = `
-      INSERT INTO users(
-        name,
-        email,
-        password_hash
-      ) values ($1, $2, $3)
-      RETURNING id
-    `;
+class User extends Model {
+  static init(sequelize){
+    super.init(
+      {
+        email: Sequelize.STRING,
+        password: Sequelize.STRING,
+      },
+      {
+        sequelize,
+      }
+    );
 
-    const { name, email, password_hash } = data;
-    const values = [
-      name,
-      email,
-      password_hash
-    ];
-
-
-    return db.query(query, values);
-
-  },
-  findByEmail(email){
-    const query = `
-      SELECT * FROM
-        users
-      WHERE
-        email = $1
-    `;
-
-    const values = [email];
-    return db.query(query, values);
+    return this;
   }
+}
 
-};
+module.exports =  User;
