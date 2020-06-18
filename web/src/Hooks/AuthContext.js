@@ -11,6 +11,7 @@ const reducer = (state, action) => {
     case "@LOGIN":
       // localStorage.setItem('@MyApp/user', JSON.stringify(action.payload.user));
       // localStorage.setItem('@MyApp/token', JSON.stringify(action.payload.token));
+      console.log(action.payload.token);
 
       return {
         ...state,
