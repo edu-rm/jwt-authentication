@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from 'react';
+import api from '../services/api';
 
 const initial_state = {
   isAuthenticated: false,
@@ -11,6 +12,8 @@ function createInitialState(){
   const token = localStorage.getItem('@MyApp/token');
 
   if(user && token){
+    api.defaults.authorization = `Bearer ${token}`;
+
     return {
       isAuthenticated: true,
       user,
@@ -28,13 +31,9 @@ function createInitialState(){
 const reducer = (state, action) => {
   switch(action.type) {
     case "@LOGIN":
-      // localStorage.setItem('@MyApp/user', JSON.stringify(action.payload.user));
-      // localStorage.setItem('@MyApp/token', JSON.stringify(action.payload.token));
-
       localStorage.setItem('@MyApp/user', action.payload.user );
       localStorage.setItem('@MyApp/token', action.payload.token );
-
-
+      api.defaults.authorization = `Bearer ${action.payload.token}`;
 
       return {
         ...state,
@@ -43,9 +42,7 @@ const reducer = (state, action) => {
         token: action.payload.payload,
       };
 
-
     case "@SAIR":
-
       localStorage.removeItem('@MyApp/user');
       localStorage.removeItem('@MyApp/token');
 

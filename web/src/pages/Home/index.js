@@ -8,12 +8,15 @@ function Home() {
   return (
     <div className="container">
       <h1>Cidades</h1>
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      <div className="cards">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
 
-
+      </div>
     </div>
   );
 }
