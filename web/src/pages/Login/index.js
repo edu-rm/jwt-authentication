@@ -1,15 +1,44 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import api from '../../services/api';
 import './styles.css';
 
-function Login() {
 
+function Login() {
+  const [email, setEmail] = useState();
+  const [senha, setSenha] = useState();
+  const [message, setMessage] = useState();
+
+  async function handleSubmit(e){
+    e.preventDefault();
+
+    try {
+      const response = await api.post('sessions',{
+        email_login: email,
+        password_login: senha
+      })
+    }catch(err){
+      setMessage(err.message);
+    }
+
+  }
   return (
     <div className="container-login">
       <h2>Faça login</h2>
-      <form>
-        <input type="text" placeholder="Email"/>
-        <input type="password" placeholder="Senha"/>
-        <button type="button">Entrar</button>
+      <form onSubmit={(e) => handleSubmit(e)}>
+
+        <input
+          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="Email"
+        />
+
+        <input
+          onChange={(e) => setSenha(e.target.value)}
+          type="password"
+          placeholder="Senha"
+        />
+        {message && (<span>{message}</span>)}
+        <button type="submit">Entrar</button>
       </form>
     </div>
   );
