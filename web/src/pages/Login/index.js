@@ -23,7 +23,7 @@ function Login() {
       dispatch({
         type: '@LOGIN',
         payload : {
-          user: response.data.email,
+          user: response.data.user.email,
           token: response.data.token,
         }
       });

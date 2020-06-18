@@ -6,12 +6,35 @@ const initial_state = {
   token: null,
 };
 
+function createInitialState(){
+  const user = localStorage.getItem('@MyApp/user');
+  const token = localStorage.getItem('@MyApp/token');
+
+  if(user && token){
+    return {
+      isAuthenticated: true,
+      user,
+      token,
+    };
+  }
+
+  return {
+    isAuthenticated: false,
+    user: null,
+    token: null,
+  };
+}
+
 const reducer = (state, action) => {
   switch(action.type) {
     case "@LOGIN":
       // localStorage.setItem('@MyApp/user', JSON.stringify(action.payload.user));
       // localStorage.setItem('@MyApp/token', JSON.stringify(action.payload.token));
-      console.log(action.payload.token);
+
+      localStorage.setItem('@MyApp/user', action.payload.user );
+      localStorage.setItem('@MyApp/token', action.payload.token );
+
+
 
       return {
         ...state,
@@ -19,9 +42,13 @@ const reducer = (state, action) => {
         user: action.payload.user,
         token: action.payload.payload,
       };
+
+
     case "@SAIR":
-      // localStorage.removeItem('@MyApp/user');
-      // localStorage.removeItem('@MyApp/token');
+
+      localStorage.removeItem('@MyApp/user');
+      localStorage.removeItem('@MyApp/token');
+
       return {
         ...state,
         isAuthenticated: false,
@@ -36,7 +63,7 @@ const reducer = (state, action) => {
 export const AuthContext = createContext();
 
 export function ContextProvider({children}) {
-  const [state, dispatch] = useReducer(reducer, initial_state);
+  const [state, dispatch] = useReducer(reducer, initial_state, createInitialState);
 
   return (
     <AuthContext.Provider
