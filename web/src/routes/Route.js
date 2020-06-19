@@ -10,12 +10,10 @@ function Route({ component : Component, isPrivate, ...rest }) {
   const { state }  = useContext(AuthContext);
   const expired = Date.now()/1000 > Number(state.exp);
 
-  console.log(expired);
 
-
-  // if(expired) {
-  //   return <Redirect to="/login" />;
-  // }
+  if(isPrivate && expired) {
+    return <Redirect to="/login" />;
+  }
 
   if((isPrivate && !state.isAuthenticated)) {
     return <Redirect to="/login" />;
