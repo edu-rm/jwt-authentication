@@ -13,7 +13,6 @@ function createInitialState(){
   const token = localStorage.getItem('@MyApp/token');
   const exp = localStorage.getItem('@MyApp/exp');
 
-  console.log('fora');
   if(user && token){
 
     if(Date.now()/1000 < Number(exp)){
@@ -24,7 +23,7 @@ function createInitialState(){
         isAuthenticated : true,
         user,
         token,
-        exp,
+        exp: 1,
       }
     }
 
@@ -79,23 +78,13 @@ export const AuthContext = createContext();
 export function ContextProvider({children}) {
   const [state, dispatch] = useReducer(reducer, initial_state, createInitialState);
 
-  // function expired() {
-  //   const { exp } = state;
-
-  //   if(Date.now()/1000 > Number(exp)) {
-  //     api.defaults.headers.authorization = null;
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
 
   return (
     <AuthContext.Provider
       value={{
         state,
         dispatch,
-        isAuthenticated: state.isAuthenticated,
+        // isAuthenticated: state.isAuthenticated,
         // expired
       }}
     >
