@@ -24,7 +24,8 @@ function Login() {
         type: '@LOGIN',
         payload : {
           user: response.data.user.email,
-          token: response.data.token,
+          token: response.data.token.value,
+          exp: response.data.token.exp
         }
       });
     }catch(err){

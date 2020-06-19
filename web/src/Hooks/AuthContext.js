@@ -5,35 +5,38 @@ const initial_state = {
   isAuthenticated: false,
   user: null,
   token: null,
+  exp: null,
 };
 
-async function createInitialState(){
+function createInitialState(){
   const user = localStorage.getItem('@MyApp/user');
   const token = localStorage.getItem('@MyApp/token');
-  let tokenIsValid = false;
+  const exp = localStorage.getItem('@MyApp/exp');
 
+  console.log('fora');
   if(user && token){
 
-    const response = await api.get('sessions', { token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTkyNTIzMjM0LCJleHAiOjE1OTI3ODI0MzR9.7iclFkLh78TjXHiVXK4BI8u7CmK-KpslJyC69WpAkKM' });
-    console.log(response.data.valid);
-    tokenIsValid = response.data.valid;
-  }
+    if(Date.now()/1000 < Number(exp)){
 
-  if(tokenIsValid){
-    api.defaults.headers.authorization = `Bearer ${token}`;
-    return {
-      isAuthenticated: true,
-      user,
-      token,
+      api.defaults.headers.authorization = `Bearer ${token}`;
+
+      return {
+        isAuthenticated : true,
+        user,
+        token,
+        exp,
+      }
     }
-  }
 
+  }
 
   return {
     isAuthenticated: false,
     user: null,
     token: null,
-  };
+    exp: null,
+  }
+
 }
 
 const reducer = (state, action) => {
@@ -41,24 +44,30 @@ const reducer = (state, action) => {
     case "@LOGIN":
       localStorage.setItem('@MyApp/user', action.payload.user );
       localStorage.setItem('@MyApp/token', action.payload.token );
+      localStorage.setItem('@MyApp/exp', action.payload.exp);
+
       api.defaults.headers.authorization = `Bearer ${action.payload.token}`;
 
       return {
         ...state,
         isAuthenticated: true,
         user: action.payload.user,
-        token: action.payload.payload,
+        token: action.payload.token,
+        exp: action.payload.exp,
       };
 
     case "@SAIR":
       localStorage.removeItem('@MyApp/user');
       localStorage.removeItem('@MyApp/token');
+      localStorage.removeItem('@MyApp/exp');
+
 
       return {
         ...state,
         isAuthenticated: false,
         user: null,
         token: null,
+        exp: null,
       };
     default:
       return state;
@@ -70,11 +79,24 @@ export const AuthContext = createContext();
 export function ContextProvider({children}) {
   const [state, dispatch] = useReducer(reducer, initial_state, createInitialState);
 
+  // function expired() {
+  //   const { exp } = state;
+
+  //   if(Date.now()/1000 > Number(exp)) {
+  //     api.defaults.headers.authorization = null;
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
+
   return (
     <AuthContext.Provider
       value={{
         state,
-        dispatch
+        dispatch,
+        isAuthenticated: state.isAuthenticated,
+        // expired
       }}
     >
     {children}

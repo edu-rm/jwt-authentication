@@ -5,14 +5,18 @@ import { AuthContext } from '../Hooks/AuthContext';
 
 
 function Route({ component : Component, isPrivate, ...rest }) {
-  const { state } = useContext(AuthContext);
+  const { isAuthenticated }  = useContext(AuthContext);
+
+  // if(expired) {
+  //   return <Redirect to="/login" />;
+  // }
 
 
-  if(isPrivate && !state.isAuthenticated ) {
+  if(isPrivate && !isAuthenticated ) {
     return <Redirect to="/login" />;
   }
 
-  if(!isPrivate && state.isAuthenticated ) {
+  if(!isPrivate && isAuthenticated) {
     return <Redirect to="/" />;
   }
 
