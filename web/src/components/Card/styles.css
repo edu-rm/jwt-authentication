@@ -36,7 +36,7 @@
 }
 
 .card .info{
-  background-color: #E60764;
+  background-color: rgb(95, 95, 236);
   color: white;
   width: 100%;
   border-bottom-left-radius: 10px ;
@@ -62,5 +62,5 @@
 }
 
 .card .info ul li + li {
-  border-left: 2px solid #DA045E;
+  border-left: 2px solid rgb(106, 106, 241);
 }

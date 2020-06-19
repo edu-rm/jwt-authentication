@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { Route as Router, Redirect } from 'react-router-dom';
 
-import api from '../services/api';
-
 import { AuthContext } from '../Hooks/AuthContext';
 
 

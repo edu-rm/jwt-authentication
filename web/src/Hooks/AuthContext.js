@@ -23,7 +23,7 @@ function createInitialState(){
         isAuthenticated : true,
         user,
         token,
-        exp: 1,
+        exp,
       }
     }
 
@@ -78,14 +78,11 @@ export const AuthContext = createContext();
 export function ContextProvider({children}) {
   const [state, dispatch] = useReducer(reducer, initial_state, createInitialState);
 
-
   return (
     <AuthContext.Provider
       value={{
         state,
         dispatch,
-        // isAuthenticated: state.isAuthenticated,
-        // expired
       }}
     >
     {children}

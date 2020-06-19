@@ -10,9 +10,12 @@ function Login() {
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState();
   const [message, setMessage] = useState();
+  const [loading, setLoading] = useState(false);
+
 
   async function handleSubmit(e){
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await api.post('sessions',{
@@ -30,7 +33,10 @@ function Login() {
       });
     }catch(err){
       setMessage(err.message);
+      setLoading(false);
     }
+    setLoading(false);
+
 
   }
   return (
@@ -50,7 +56,7 @@ function Login() {
           placeholder="Senha"
         />
         {message && (<span>{message}</span>)}
-        <button type="submit">Entrar</button>
+        <button type="submit">{!loading ? 'Entrar' : '...'}</button>
       </form>
     </div>
   );
