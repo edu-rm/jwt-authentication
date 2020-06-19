@@ -32,19 +32,37 @@ class SessionController{
       return res.status(400).json({ error : 'Password does not match'});
     }
 
+    const newToken= jwt.sign({ id },authConfiguration.secret, {
+      expiresIn: authConfiguration.expiresIn,
+
+    });
+
+    const {exp} = jwt.decode(newToken);
+
+
+
     return res.json({
       user: {
         email,
         password
       },
-      token: jwt.sign({ id },authConfiguration.secret, {
-        expiresIn: authConfiguration.expiresIn,
-      })
+      token: {
+        value: newToken,
+        exp,
+      }
     });
 
-    // return res.json(results);
-
   }
+
+  // async verify(req,res){
+  //   const { token } = req.body;
+
+  //   jwt.verify(token, authConfiguration.secret, (err, dec) => {
+  //     if(err) return res.json({ valid: false });
+  //   });
+
+  //   return res.json({ valid: true });
+  // }
 
 }
 

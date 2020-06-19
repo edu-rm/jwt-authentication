@@ -7,19 +7,27 @@ const initial_state = {
   token: null,
 };
 
-function createInitialState(){
+async function createInitialState(){
   const user = localStorage.getItem('@MyApp/user');
   const token = localStorage.getItem('@MyApp/token');
+  let tokenIsValid = false;
 
   if(user && token){
-    api.defaults.authorization = `Bearer ${token}`;
 
+    const response = await api.get('sessions', { token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTkyNTIzMjM0LCJleHAiOjE1OTI3ODI0MzR9.7iclFkLh78TjXHiVXK4BI8u7CmK-KpslJyC69WpAkKM' });
+    console.log(response.data.valid);
+    tokenIsValid = response.data.valid;
+  }
+
+  if(tokenIsValid){
+    api.defaults.headers.authorization = `Bearer ${token}`;
     return {
       isAuthenticated: true,
       user,
       token,
-    };
+    }
   }
+
 
   return {
     isAuthenticated: false,
@@ -33,7 +41,7 @@ const reducer = (state, action) => {
     case "@LOGIN":
       localStorage.setItem('@MyApp/user', action.payload.user );
       localStorage.setItem('@MyApp/token', action.payload.token );
-      api.defaults.authorization = `Bearer ${action.payload.token}`;
+      api.defaults.headers.authorization = `Bearer ${action.payload.token}`;
 
       return {
         ...state,
